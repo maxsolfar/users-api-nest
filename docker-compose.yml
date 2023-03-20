@@ -1,0 +1,24 @@
+version: '3.1'
+
+services:
+  postgres:
+    image: postgres:15.1
+    restart: always
+    environment: 
+      POSTGRES_DB: user-api-DB
+      POSTGRES_USER: maxsolfar
+      POSTGRES_PASSWORD: root
+    volumes:
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    depends_on:
+      - postgres
+    ports:
+      - 80:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: db@maxsolfar.dev
+      PGADMIN_DEFAULT_PASSWORD: root
